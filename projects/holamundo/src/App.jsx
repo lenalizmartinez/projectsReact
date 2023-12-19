@@ -1,40 +1,27 @@
+import {useState} from 'react';
 import reactImg from './assets/react-core-concepts.png';
 import componentsImg from './assets/components.png';
 import { CORE_CONCEPTS } from './data.js';
-
-
-const reactDescription = ['Fundamental', 'Crucial', 'Core']
-function genRandomInt(max){
-  return Math.floor(Math.random() * (max+1));
-}
-
-function Header(){
-  const description = reactDescription[genRandomInt(2)];
-
-  return (
-  <header>
-      <img src={reactImg} alt="Stylized atom" />
-    <h1>React Essentials</h1>
-    <p>
-      {description} React concepts you will need for almost any app you are
-      going to build!
-    </p>
-  </header>
-  );
-}
-
-
-function CoreConcept(props){
-  return (
-    <li>
-      <img src={props.image} alt={props.title}/>
-      <h3>{props.title}</h3>
-      <p>{props.description}</p>
-    </li>
-  );
-}
+import Header from './components/Header.jsx';
+import CoreConcept from './components/CoreConcepts.jsx';
+import TabButton from './components/TabButton.jsx';
 
 function App() {
+
+  const [selectedTopic, setSelectedTopic]= useState('Please click a button');
+
+let tabContent = 'please click a button';
+
+function handSelect(selectedButton){
+  
+  //tabContent = selectedButton;
+  setSelectedTopic(selectedButton);
+  //selectedButton => 'components', 'jsx', 'props',
+  console.log(setSelectedTopic);
+}
+
+console.log('APP component executing');
+
   return (
     <div>
       <Header />
@@ -54,6 +41,16 @@ function App() {
              <CoreConcept {... CORE_CONCEPTS[3]}/>
           </ul>
 
+        </section>
+        <section id="examples">
+          <h2>Examples</h2>
+          <menu>
+            <TabButton onSelect={() => handSelect('components')}>Component</TabButton>
+            <TabButton onSelect={() => handSelect('jsx')}>JSX</TabButton>
+            <TabButton onSelect={() => handSelect('props')}>Props</TabButton>
+            <TabButton onSelect={() => handSelect('state')}>State</TabButton>
+          </menu>
+            {selectedTopic}
         </section>
 
         <h2>Time to get started!</h2>
